@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function InfluencerSearch() {
   const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
 
   const images = [
     "/images/influencer1.jpg",
@@ -17,6 +19,15 @@ export default function InfluencerSearch() {
     "/images/influencer9.jpg",
     "/images/influencer10.jpg"
   ];
+
+  const handleSearch = () => {
+    // Only redirect if there's a search term
+    if (searchTerm.trim() !== '') {
+      // Redirect to a route like /influencer/[name]
+      // Make sure you have a corresponding dynamic route set up.
+      router.push(`/influencer/${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100 p-4 pt-32 relative bg-cover bg-center" style={{ backgroundImage: 'url(/images/background.jpg)' }}>
@@ -38,7 +49,7 @@ export default function InfluencerSearch() {
           className="w-full px-4 py-3 text-lg text-black rounded-full border-2 border-gray-300 focus:border-blue-500 focus:outline-none shadow-lg"
         />
         <button 
-          onClick={() => console.log('Searching:', searchTerm)}
+          onClick={handleSearch}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition"
         >
           Search
