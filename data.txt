@@ -1,4 +1,4 @@
-Influencer: Logan Paul, Amount: 1000, Duration: 8
-Influencer: Logan Paul, Amount: 10000, Duration: 5
-Influencer: Logan Paul, Amount: 1, Duration: 1
 Influencer: Logan Paul, Prediction: rise, Amount: 1, Duration: 1
+Influencer: Logan Paul, Prediction: rise, Amount: 1, Duration: 1
+Influencer: Logan Paul, Prediction: rise, Amount: 1, Duration: 1, UserId: 130610db-4c53-444d-8e91-b9896c702d28
+Influencer: Logan Paul, Prediction: rise, Amount: 1, Duration: 1, UserId: 130610db-4c53-444d-8e91-b9896c702d28

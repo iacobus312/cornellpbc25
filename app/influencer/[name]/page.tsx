@@ -1,5 +1,7 @@
 "use client";
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
+import { Wallet } from '@coinbase/onchainkit/wallet';
+import { Avatar, Identity, Name, Badge, Address } from '@coinbase/onchainkit/identity';
 
 interface InfluencerPageProps {
   // Note: params is now a Promise that resolves to an object with the name property
@@ -9,7 +11,6 @@ interface InfluencerPageProps {
 export default function InfluencerPage({ params }: InfluencerPageProps) {
   // Unwrap the params promise using React.use()
   const { name } = use(params);
-
   // Decode URL encoding and replace hyphens with spaces
   const formattedName = decodeURIComponent(name).replace(/-/g, " ");
   // Build the path to the public/images folder in the root
@@ -22,26 +23,43 @@ export default function InfluencerPage({ params }: InfluencerPageProps) {
   const [amount, setAmount] = useState("");
   const [duration, setDuration] = useState("");
   const [prediction, setPrediction] = useState<"rise" | "fall" | "">("");
+  
+  // Retrieve the user id from localStorage
+  const [userId, setUserId] = useState<string>("");
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
+
+  // State to hold submission details for on-page display
+  const [submissionData, setSubmissionData] = useState<{
+    influencer: string;
+    prediction: string;
+    amount: number;
+    duration: number;
+    userId: string;
+  } | null>(null);
 
   // Open modal when either button is clicked
-  // Pass in "rise" or "fall" to store in state
   const handleButtonClick = (pred: "rise" | "fall") => {
     setPrediction(pred);
     setModalOpen(true);
   };
-
-  // Handle confirm: send data to backend
+  
+  // Handle confirm: send data to backend and update submissionData
   const handleConfirm = async () => {
     const payload = {
+      userId,
       influencer: formattedName,
       prediction, // "rise" or "fall"
       amount: Number(amount),
       duration: Number(duration),
+       // include the internally assigned user id
     };
 
     try {
-      // This fetch call will hit your API route defined in app/api/submit/route.ts.
-      // That API route will write the data to a file called "data.txt" in your project's root directory.
       const response = await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,8 +70,11 @@ export default function InfluencerPage({ params }: InfluencerPageProps) {
         throw new Error("Network response was not ok");
       }
 
-      // Optionally, handle successful submission
-      alert("Submission successful!");
+      // Set submission data so it displays on the page
+      setSubmissionData(payload);
+      // Optionally, alert the user with the user id:
+      alert(`Submission successful! Your user id is: ${userId}`);
+      
       // Reset input fields and close modal
       setAmount("");
       setDuration("");
@@ -126,14 +147,12 @@ export default function InfluencerPage({ params }: InfluencerPageProps) {
       <div className="text-center">
         <p className="text-2xl mb-6">Do you think that {formattedName} will...</p>
         <div className="flex justify-center space-x-8 mb-6">
-          {/* Pass "rise" into handleButtonClick */}
           <button
             onClick={() => handleButtonClick("rise")}
             className="bg-gradient-to-r from-green-400 to-green-600 text-white py-4 px-12 text-xl rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-2xl"
           >
             rise
           </button>
-          {/* Pass "fall" into handleButtonClick */}
           <button
             onClick={() => handleButtonClick("fall")}
             className="bg-gradient-to-r from-red-400 to-red-600 text-white py-4 px-12 text-xl rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-2xl"
@@ -156,6 +175,17 @@ export default function InfluencerPage({ params }: InfluencerPageProps) {
 
       {/* Render modal if open */}
       {modalOpen && <Modal />}
+
+      {/* Display submission output including the user id */}
+      {submissionData && (
+        <div className="mt-8 text-center">
+          <p>Influencer: {submissionData.influencer}</p>
+          <p>Prediction: {submissionData.prediction}</p>
+          <p>Amount: {submissionData.amount}</p>
+          <p>Duration: {submissionData.duration}</p>
+          <p>User ID: {submissionData.userId}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,18 +1,18 @@
-// app/layout.tsx
-import './globals.css'; // or wherever you keep your global styles
-import { ReactNode } from 'react';
+import '@coinbase/onchainkit/styles.css'; // OnchainKit styles
+import './globals.css';
+import { Providers } from './providers';
 
-export const metadata = {
-  title: 'Clout Trader',
-  description: 'Bet on influencer clout on Base',
-};
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
 }
+  

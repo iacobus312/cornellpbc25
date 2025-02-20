@@ -5,10 +5,10 @@ import path from "path";
 export async function POST(request: NextRequest) {
   try {
     // Parse the JSON payload, including the prediction field
-    const { influencer, prediction, amount, duration } = await request.json();
+    const { influencer, prediction, amount, duration, userId} = await request.json();
 
     // Format the data to include the prediction field
-    const dataToWrite = `Influencer: ${influencer}, Prediction: ${prediction}, Amount: ${amount}, Duration: ${duration}\n`;
+    const dataToWrite = `Influencer: ${influencer}, Prediction: ${prediction}, Amount: ${amount}, Duration: ${duration}, UserId: ${userId}\n`;
 
     // Define the file path to data.txt in your project's root directory
     const filePath = path.join(process.cwd(), "data.txt");

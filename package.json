@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coinbase/onchainkit": "^0.37.1",
     "ethers": "^6.13.5",
     "next": "15.1.7",
+    "onchainkit": "^0.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "wagmi": "^2.14.11"
