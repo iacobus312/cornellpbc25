@@ -14,3 +14,7 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+
+// example run
+// npx hardhat run scripts/deploy.ts --network base-sepolia
