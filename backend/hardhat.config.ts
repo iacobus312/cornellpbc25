@@ -1,8 +1,7 @@
 import { HardhatUserConfig } from 'hardhat/config';
-import { config as dotenvConfig } from "dotenv";
-import "@nomicfoundation/hardhat-toolbox";
+import '@nomicfoundation/hardhat-toolbox';
 
-dotenvConfig();
+require('dotenv').config();
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -15,7 +14,6 @@ const config: HardhatUserConfig = {
     //   accounts: [process.env.WALLET_KEY as string],
     //   gasPrice: 1000000000,
     // },
-
     // for testnet
     'base-sepolia': {
       url: 'https://sepolia.base.org',
