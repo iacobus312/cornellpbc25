@@ -37,12 +37,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 ## Using the TS scripts
-**Commands**
-*1*
+**Commands** <br>
+*1* <br>
 npx hardhat run scripts/sendTransaction1.ts --network base-sepolia
-
-*2*
+<br>
+*2* <br>
 npx hardhat run scripts/sendTransaction2.ts --network base-sepolia
-
-*Payout*
+<br>
+*Payout*<br>
 npx hardhat run scripts/payoutTransaction.ts --network base-sepolia
