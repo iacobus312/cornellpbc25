@@ -53,16 +53,14 @@ npx hardhat ignition deploy ./ignition/modules/Lock.ts
 
 ## Using the TS scripts
 ```
-**Commands** <br>
-<br>
-*1* <br>
+Commands
+
+1 
 npx hardhat run scripts/sendTransaction1.ts --network base-sepolia
-<br>
-<br>
-*2* <br>
+
+2 
 npx hardhat run scripts/sendTransaction2.ts --network base-sepolia
-<br>
-<br>
-*Payout*<br>
+
+Payout
 npx hardhat run scripts/payoutTransaction.ts --network base-sepolia
 ```
